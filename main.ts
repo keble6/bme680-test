@@ -24,7 +24,19 @@ function i2cRead (reg: number) {
     )
     return pins.i2cReadNumber(slaveaddress, NumberFormat.Int8LE, false)
 }
+function dec2hex (dec: number) {
+    str = ""
+    chars = "0123456789ABCDEF"
+    a = Math.floor(dec / 16)
+    str = chars.charAt(a)
+    a = dec - a
+    str = "" + str + chars.charAt(a)
+    return str
+}
 let Id = 0
+let a = 0
+let chars = ""
+let str = ""
 let slaveaddress = 0
 basic.clearScreen()
 // Slave address 0x76 (if SDO=0)
@@ -38,8 +50,7 @@ basic.forever(function () {
     Id = i2cRead(reg_Id)
     basic.showIcon(IconNames.Heart)
     serial.writeString("ID = ")
-    serial.writeNumber(Id)
-    serial.writeLine("")
+    serial.writeLine("" + (dec2hex(Id)))
     basic.pause(100)
     basic.clearScreen()
     basic.pause(1000)
