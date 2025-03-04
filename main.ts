@@ -25,18 +25,21 @@ function i2cRead (reg: number) {
     return pins.i2cReadNumber(slaveaddress, NumberFormat.Int8LE, false)
 }
 function dec2hex (dec: number) {
-    str = ""
+    dec1 = dec
+    result = ""
     chars = "0123456789ABCDEF"
-    a = Math.floor(dec / 16)
-    str = chars.charAt(a)
-    a = dec - a
-    str = "" + str + chars.charAt(a)
-    return str
+    while (dec1 != 0) {
+        hex2 = dec1 % 16
+        result = "" + chars.charAt(hex2) + result
+        dec1 = Math.floor(dec1 / 16)
+    }
+    return "0x" + result
 }
 let Id = 0
-let a = 0
+let hex2 = 0
 let chars = ""
-let str = ""
+let result = ""
+let dec1 = 0
 let slaveaddress = 0
 basic.clearScreen()
 // Slave address 0x76 (if SDO=0)
