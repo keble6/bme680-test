@@ -77,13 +77,27 @@ slaveaddress = 118
 let reg_reset = 224
 // Id register
 let reg_Id = 208
+// Id register
+let reg_ctrl_hum = 114
+// ctrl_hum reg
+reg_ctrl_hum = 114
+// ctrl_meas reg
+let reg_ctrl_meas = 116
+// gas_wait_0 reg
+let reg_gas_wait_0 = 100
 basic.forever(function () {
     i2cWrite(reg_reset, 182)
     Id = i2cRead(reg_Id)
     basic.showIcon(IconNames.Heart)
     serial.writeString("ID = ")
     serial.writeLine("" + (dec2hex(Id)))
+    // set humidity oversampling
+    i2cWrite(reg_ctrl_hum, 1)
+    // set t and p oversampling and mode=sleep
+    i2cWrite(reg_ctrl_meas, 84)
+    // set gas heat up to 100 ms
+    i2cWrite(reg_gas_wait_0, 89)
     basic.pause(100)
     basic.clearScreen()
-    basic.pause(1000)
+    basic.pause(5000)
 })
