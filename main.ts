@@ -1,3 +1,32 @@
+function doSettings () {
+    i2cWrite(1, 1)
+}
+function i2cWrite3 (reg: number, val2: number, val1: number, val0: number) {
+    pins.i2cWriteNumber(
+    slaveaddress,
+    reg,
+    NumberFormat.Int8LE,
+    true
+    )
+    pins.i2cWriteNumber(
+    slaveaddress,
+    val2,
+    NumberFormat.Int8LE,
+    true
+    )
+    pins.i2cWriteNumber(
+    slaveaddress,
+    val1,
+    NumberFormat.Int8LE,
+    true
+    )
+    pins.i2cWriteNumber(
+    slaveaddress,
+    val0,
+    NumberFormat.Int8LE,
+    false
+    )
+}
 function i2cWrite (reg: number, val: number) {
     // Set up Rest reg to be written to
     pins.i2cWriteNumber(
@@ -15,7 +44,7 @@ function i2cWrite (reg: number, val: number) {
     )
 }
 function i2cRead (reg: number) {
-    // Set up Rest reg to be written to
+    // Set up reg to be written to
     pins.i2cWriteNumber(
     slaveaddress,
     reg,
